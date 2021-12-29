@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { generateRoutes } from "./utils/data";
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
+import { useTheme } from "./Components/Theme";
+import { data } from "./utils/parser";
+import Main from "./Components/Main";
+import "./App.css";
+
+const routes = generateRoutes(data);
 
 function App() {
+  const [theme, updateTheme] = useTheme();
+  const updatedTheme = createTheme(theme);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={updatedTheme}>
+      <CssBaseline/>
+      <Main routes={routes} toggleTheme={updateTheme} />
+    </ThemeProvider>
   );
 }
 
